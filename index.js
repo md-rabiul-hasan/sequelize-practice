@@ -4,11 +4,31 @@ const sequelize = new Sequelize('sequelize', 'root', '', {
     dialect: 'mysql'
 });
 
-sequelize.authenticate().then( () => {
-    console.log('Connected to database');
+const User = sequelize.define('user', {
+    email: {
+        type: Sequelize.DataTypes.STRING,
+        unique: true,
+        allowNull: false
+    },
+    password: {
+        type: Sequelize.DataTypes.STRING,
+        allowNull: false
+    },
+    age: {
+        type: Sequelize.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 10
+    }
+},{
+    tableName: 'users',
+});
+
+console.log(sequelize.models.user)
+
+sequelize.sync({ force: true}).then( () => {
+    console.log('Databae are synced');
 })
 .catch((err) => {
     console.log(err);
 });
 
-console.log("trying to connect to database");
