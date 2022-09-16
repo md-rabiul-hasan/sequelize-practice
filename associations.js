@@ -26,7 +26,10 @@ const Capital = sequelize.define('capital', {
 Country.hasOne(Capital);
 
 sequelize.sync({ alter: true}).then( () => {
-    console.log("table are synced successfully")
+    Country.bulkCreate(
+        { countryName: 'USA' },
+        { countryName: 'Bangladesh' },
+    )
 })
 .catch( (err) => {
     console.log(err);
